@@ -99,6 +99,11 @@ $(document).ready(function() {
         $('#change_graph').trigger('click');
     });
 
+    function manip_node_handler(cbthing,callback) {
+        callback(cbthing);
+        get_nodes();
+    };
+
     function generate_graph(nodes, links) {
 
         var visjs_options = {
@@ -106,7 +111,12 @@ $(document).ready(function() {
             edges: {width: 1,       shadow: true},
             height: "800",
             width: "1000",
-            manipulation: {enabled: true}
+            manipulation: {
+                enabled: true,
+                addNode: manip_node_handler,
+                deleteNode: manip_node_handler,
+                editNode: manip_node_handler
+            }
         }
 
         var visjs_container = document.getElementById('graph_container');
@@ -131,6 +141,27 @@ $(document).ready(function() {
 
         // Reset the "details" box
         $('#obj_details').html('<p><b>Details:</b></p>');
+
+        get_nodes();
+    };
+
+    function get_nodes() {
+        var graphed_node_ids = network.getPositions();
+        var graphed_node_data = [];
+        var visjs_data_node_ids = visjs_data['nodes'].distinct('id');
+        var graph_node_list = "";
+        for(var m in graphed_node_ids) {
+            if(m.indexOf('edgeId:') == 0) continue; // Skip edgeId values
+            for(var n = 0; n < visjs_data_node_ids.length; n++) {
+                if(m === visjs_data_node_ids[n]) {
+                    graph_node_list += m.toString() + "<br />";
+                    graphed_node_data.push(visjs_data['nodes'].get(m));
+                    continue;
+                };
+            };
+        };
+
+        $('#selection_debug').html(graph_node_list);
     };
 
     function update_details(obj) {
