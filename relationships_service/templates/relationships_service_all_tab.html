@@ -52,9 +52,10 @@ $(document).ready(function() {
     $(document).on('click', '#add_campaign', function(e) {
         // Collect id and type for each visible non-campaign node.
         var data = [];
-        for (var i = 0; i < nodes.length; i++) {
-            if (nodes[i].visible && nodes[i].type != 'Campaign') {
-                data.push({'id': nodes[i].id, 'type': nodes[i].type})
+        var graphed_nodes = get_nodes();
+        for (var i = 0; i < graphed_nodes.length; i++) {
+            if (graphed_nodes[i].type != 'Campaign') {
+                data.push({'id': graphed_nodes[i].id, 'type': graphed_nodes[i].type})
             }
         }
 
@@ -162,6 +163,7 @@ $(document).ready(function() {
         };
 
         $('#selection_debug').html(graph_node_list);
+        return graphed_node_data; // Return the node data objects which are still on-graph
     };
 
     function update_details(obj) {
