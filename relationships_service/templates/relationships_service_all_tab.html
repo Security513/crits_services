@@ -12,6 +12,7 @@ $(document).ready(function() {
     $('#graph_config').draggable();
     $('#graph_actions').draggable();
     $('#obj_details').draggable();
+    $('#selection_debug').draggable();
 
     // default graph lists
     var nodes = [];
@@ -122,6 +123,8 @@ $(document).ready(function() {
         .css({'position': 'absolute', 'top': 275, 'right' : 20});
         $('#obj_details').show()
         .css({'position': 'absolute', 'top': 500, 'left' : 20});
+        $('#selection_debug').show()
+        .css({'position': 'absolute', 'top': 500, 'right' : 20});
 
         // Configure vis.js events
         network.on('selectNode', update_details);
@@ -172,6 +175,12 @@ $(document).ready(function() {
     height: 200px;
     z-index: 5;
     float: left;
+}
+#selection_debug {
+    width: 600px;
+    height: 200px;
+    z-index: 5;
+    float: right;
 }
 #graph_container {
     border: 1px solid #CCCCCC;
@@ -241,5 +250,7 @@ $(document).ready(function() {
     </div>
     <div id="obj_details" class="ui-widget-content" style="display: none;">
      <p><b>Details:</b></p>
+    </div>
+    <div id="selection_debug" class="ui-widget-content" style="display: none;">
     </div>
 </div>
